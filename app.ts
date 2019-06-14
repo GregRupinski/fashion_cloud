@@ -26,20 +26,24 @@ class App {
 
     // returns all stored keys in the cache
     app.get('/keys', async (req, res) => {
-        res.send(await cacheController.getAllKeys());
+        res.status(200).send(await cacheController.getAllKeys());
     });
 
+    // retrieve cached item by key
     app.get('/items/:key', async(req, res) => {
       const {key} = req.params;
       const result = await cacheController.getByKey(key);
-      res.send(result);
+      res.status(typeof result === 'string' ? 201 : 200).send(result);
     });
 
-
-
+    // delete cached item by key
+    app.delete('/items/:key', async(req, res) => {
+      const {key} = req.params;
+      const result = await cacheController.deleteItem(key);
+      res.status(result ? 204 : 404).send();
+    });
 
     app.listen(3000, async () => {
-      
       console.log('Listening on port 3000!');
     });
   }

@@ -1,4 +1,4 @@
-import * as crypto from 'crypto';
+import crypto from "crypto"
 
 import { ICacheRepository } from "../entities/repositiories/cache-i";
 
@@ -22,5 +22,9 @@ export class CacheController{
         const value = crypto.randomBytes(64).toString('hex');
         const {value: result} = await this.cacheRepository.insert({key, value});
         return result;
+    }
+
+    deleteItem(key:string):Promise<boolean>{
+        return this.cacheRepository.delete(key);
     }
 }

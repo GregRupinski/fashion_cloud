@@ -32,4 +32,14 @@ export class CacheRepository implements ICacheRepository{
         const {ops:[result]} = await this.collection.insertOne(data);
         return result;
     }
+
+    /**
+     * Delete item.
+     * Returns true if item was successfully deleted
+     * @param key 
+     */
+    public async delete(key:string):Promise<boolean>{
+        const {deletedCount} = await this.collection.deleteOne({key});
+        return deletedCount > 0;
+    }
 }
