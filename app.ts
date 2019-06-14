@@ -19,12 +19,24 @@ class App {
       res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
       next();
     });
+    const database:DBConnector = new DBConnector();
+    await database.init();
 
-    const cacheController:CacheController = new CacheController(new CacheRepository(new DBConnector()));
+    const cacheController:CacheController = new CacheController(new CacheRepository(database));
 
-    app.get('/', async (req, res) => {
-        res.send('ok');
+    // returns all stored keys in the cache
+    app.get('/keys', async (req, res) => {
+        res.send(await cacheController.getAllKeys());
     });
+
+    app.get('/items/:key', async(req, res) => {
+      const {key} = req.params;
+      const result = await cacheController.getByKey(key);
+      res.send(result);
+    });
+
+
+
 
     app.listen(3000, async () => {
       
