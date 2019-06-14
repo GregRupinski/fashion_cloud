@@ -5,4 +5,5 @@ export interface ICacheRepository{
     deleteAll():Promise<boolean>;
     insert(data:any):Promise<{key:string, value:string}>
     update(key:string, data:any):Promise<boolean>;
+    getOldestItem():Promise<any>;
 }

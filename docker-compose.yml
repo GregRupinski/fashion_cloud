@@ -8,7 +8,8 @@ services:
     depends_on:
       - db
     environment:
-      - MONGO_URL=mongodb://localhost:27017/mydb
+      - DATABASE_URL=mongodb://localhost:27017
+      - CACHE_LIMIT=5
   db:
     image: mongo:3.6
     restart: always

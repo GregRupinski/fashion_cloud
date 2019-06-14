@@ -52,4 +52,9 @@ export class CacheRepository implements ICacheRepository{
         const {modifiedCount} = await this.collection.updateOne({key}, {'$set': data});
         return modifiedCount > 0;
     }
+
+    public async getOldestItem():Promise<any>{
+        const result = await this.collection.find().sort({createdAt: 1}).limit(1).toArray();
+        return result.length ? result[0] : null;
+    }
 }
