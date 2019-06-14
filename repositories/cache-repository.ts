@@ -47,4 +47,9 @@ export class CacheRepository implements ICacheRepository{
         const result = await this.collection.deleteMany({});
         return true;
     }
+
+    public async update(key:string, data:any):Promise<boolean>{
+        const {modifiedCount} = await this.collection.updateOne({key}, {'$set': data});
+        return modifiedCount > 0;
+    }
 }

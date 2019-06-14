@@ -11,6 +11,11 @@ export class CacheController{
         return this.cacheRepository.getAllKeys();
     }
 
+    /**
+     * Retrieve cached item by key.
+     * If doesnt exist create new item(random string) for provided key and return created string
+     * @param key 
+     */
     async getByKey(key:string):Promise<string | {}>{
         const item = await this.cacheRepository.find(key);
         if(item.length){
@@ -22,6 +27,20 @@ export class CacheController{
         const value = crypto.randomBytes(64).toString('hex');
         const {value: result} = await this.cacheRepository.insert({key, value});
         return result;
+    }
+
+    /**
+     * Update cached item, if doesnt exists return null
+     * @param key 
+     * @param body 
+     */
+    async updateItem(key: string, body:any){
+        const item = await this.cacheRepository.find(key);
+        if(!item.length){
+            return null;
+        }
+        const result = await this.cacheRepository.update(key, body);
+        return result; 
     }
 
     deleteItem(key:string):Promise<boolean>{

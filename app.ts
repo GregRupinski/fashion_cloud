@@ -41,6 +41,16 @@ class App {
     });
 
     /**
+    * update cached item by key
+    */
+    app.put('/items/:key', async(req, res) => {
+      const {key} = req.params;
+      const body = req.body;
+      const result = await cacheController.updateItem(key, body);
+      res.status(result ? 204 : 404).send();
+    });
+
+    /**
      * delete cached item by key
      */
     app.delete('/items/:key', async(req, res) => {

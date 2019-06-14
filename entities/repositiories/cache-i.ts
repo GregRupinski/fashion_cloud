@@ -4,4 +4,5 @@ export interface ICacheRepository{
     delete(key:string):Promise<boolean>;
     deleteAll():Promise<boolean>;
     insert(data:any):Promise<{key:string, value:string}>
+    update(key:string, data:any):Promise<boolean>;
 }
