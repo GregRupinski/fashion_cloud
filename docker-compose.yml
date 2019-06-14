@@ -1,0 +1,16 @@
+version: "1"
+services:
+  fashion_cloud: 
+    image: greg-rupinski/fashion-cloud
+    ports: 
+      - 3000:3000
+    command: bash -c 'while !</dev/tcp/db/5432; do sleep 1; done; npm start'
+    depends_on:
+      - db
+    environment:
+      - MONGO_URL=mongodb://localhost:27017/mydb
+  db:
+    image: mongo:3.6
+    restart: always
+    ports:
+      - 27017:27017

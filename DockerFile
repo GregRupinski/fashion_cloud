@@ -1,0 +1,9 @@
+FROM node:8
+RUN mkdir /fashion_cloud
+ADD . /fashion_cloud
+WORKDIR /fashion_cloud
+COPY package*.json ./
+RUN npm i
+COPY . .
+EXPOSE 80
+CMD ["npm", "start"]
