@@ -42,4 +42,9 @@ export class CacheRepository implements ICacheRepository{
         const {deletedCount} = await this.collection.deleteOne({key});
         return deletedCount > 0;
     }
+
+    public async deleteAll(){
+        const result = await this.collection.deleteMany({});
+        return true;
+    }
 }

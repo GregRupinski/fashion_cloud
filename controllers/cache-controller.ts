@@ -27,4 +27,8 @@ export class CacheController{
     deleteItem(key:string):Promise<boolean>{
         return this.cacheRepository.delete(key);
     }
+
+    deleteAll():Promise<boolean>{
+        return this.cacheRepository.deleteAll();
+    }
 }
